@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\MidtransController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('users', UserController::class);
+        Route::resource('foods', FoodController::class);
     });
 
 Route::get('midtrans/success', [MidtransController::class, 'success']);
