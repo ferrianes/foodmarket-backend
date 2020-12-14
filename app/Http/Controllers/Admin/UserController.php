@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -41,11 +42,17 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $data = $request->all();
 
-        $data['profile_photo_path'] = $request->file('profile_photo_path')->store('profile-photos', 'public');
-
-        User::create($data);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'house_number' => $request->house_number,
+            'phone_number' => $request->phone_number,
+            'city' => $request->city,
+            'password' => Hash::make($request->password),
+            'profile_photo_path' => $request->file('profile_photo_path')->store('profile-photos', 'public')
+        ]);
 
         return redirect()->route('users.index');
     }
