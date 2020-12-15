@@ -15,10 +15,10 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = Food::paginate(10);
+        $food = Food::paginate(10);
 
-        return view('foods.index', [
-            'foods' => $foods
+        return view('food.index', [
+            'food' => $food
         ]);
     }
 
@@ -29,7 +29,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('food.create');
     }
 
     /**
@@ -40,7 +40,13 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $data['picture_path'] = $request->file('picture_path')->store('food-photos', 'public');
+
+        Food::create($data);
+
+        return redirect()->route('food.index');
     }
 
     /**

@@ -25,8 +25,10 @@ Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])
     ->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('users', UserController::class);
-        Route::resource('foods', FoodController::class);
+        Route::resources([
+            'users' => UserController::class,
+            'food' => FoodController::class
+        ]);
     });
 
 Route::get('midtrans/success', [MidtransController::class, 'success']);
