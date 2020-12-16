@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FoodController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\MidtransController;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +26,11 @@ Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])
     ->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('transactions/{id}/status/{status}', [TransactionController::class, 'changeStatus'])->name('transactions.changeStatus');
         Route::resources([
             'users' => UserController::class,
-            'food' => FoodController::class
+            'food' => FoodController::class,
+            'transactions' => TransactionController::class
         ]);
     });
 
